@@ -1,28 +1,69 @@
 // Assignment Code
+var passwordLength;
+var lowercase;
+var uppercase;
+var numeric;
+var specialcharacters;
+var lowercaseAlphabet = "abcdefghijklmnopqrstuvwuxyz";
+var uppercaseAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWUXYZ";
+var numbersLetters = "0123456789";
+var specialCharactersBox = "!@#$%^&*()_+-";
+
+
 var generateBtn = document.querySelector("#generate");
-var lettersU = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
-var lettersL= []
-for(let letter of lettersU){
-  lettersL.push(letter.toLowerCase());
-}
-console.log(lettersU, lettersL);
+
+
+
+
+generateBtn.addEventListener("click", generatePassword);
 
 function generatePassword(){
-
+  passwordLength = parseInt(prompt("Enter password length"));
+  lowercase = prompt("Should password include lowercase characters?")
+  uppercase = prompt("Should password include uppercase characters?")
+  numeric = prompt("Should password include numeric characters?")
+  specialcharacters = prompt("Should password include specialcharacters characters?")
+  while(passwordLength < 8 || passwordLength > 128){
+    if(passwordLength < 8 || passwordLength > 128){
+      passwordLength = parseInt(prompt("Please enter the password between 8 and 128 characters."))
+    }
+  }
+    if(lowercase == "yes" || uppercase == "yes" || numeric == "yes" || specialcharacters == "yes"){
+      writePassword();
+    } 
+      else{
+        alert("Please at least select one of the characters type")
+      }
+     
+  
 }
 
 
-// Write password to the #password input
-function writePassword() {
-  var password = generatePassword();
-  var passwordText = document.querySelector("#password");
+function writePassword(){
+  console.log(lowercase);
+  
+  var possiblePassword = "";
+  if(lowercase == "yes"){
+    possiblePassword = possiblePassword + lowercaseAlphabet;
+  }
+  if(uppercase == "yes"){
+    possiblePassword = possiblePassword + uppercaseAlphabet;
+  }
+  if(numeric == "yes"){
+    possiblePassword = possiblePassword + numbersLetters;
+  }
+  if(specialcharacters == "yes"){
+    possiblePassword = possiblePassword + specialCharactersBox;
+  }
 
-  passwordText.value = password;
+  var generatePassword = ""
+  
+  for(var i = 0; i < passwordLength; i++){
+    let randomnumber = Math.random() * possiblePassword.length;
+    generatePassword = generatePassword + possiblePassword[Math.floor(randomnumber)]
+  }
+  alert(generatePassword);
+
 
 }
 
-
-
-
-// Add event listener to generate button
-generateBtn.addEventListener("click", writePassword);
